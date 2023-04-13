@@ -45,12 +45,13 @@ body {
     padding: 20px;
     color: black;
     text-align: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 50%;
     border-right: 1px solid;
+    height: 100vh;
 }
 
-#search-results {
+#your-team {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -58,7 +59,7 @@ body {
     padding: 20px;
     color: black;
     text-align: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 50%;
     border-left: 1px solid;
 }
@@ -66,12 +67,18 @@ body {
 .search-inputs {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-content: center;
     justify-content: center;
 }
 
 .search-field {
     width: 50%;
+    min-width: 180px;
     margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.search-submit {
+    margin-bottom: 10px;
 }
