@@ -1,0 +1,77 @@
+@font-face {
+    font-family: "Disney";
+    src: url(NewWaltDisneyFontRegular-BPen.ttf);
+    src: url(NewWaltDisneyUi-8YdA.ttf);
+}
+
+body {
+    background-color: rgb(238, 233, 139);
+}
+
+.disney-font {
+    font-family: "Disney";
+}
+
+#page-title {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    padding: 20px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 2px solid black;
+}
+
+.bold-para {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#team-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+#input-section {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    padding: 20px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    width: 50%;
+    border-right: 1px solid;
+}
+
+#search-results {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    padding: 20px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    width: 50%;
+    border-left: 1px solid;
+}
+
+.search-inputs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.search-field {
+    width: 50%;
+    margin-right: 10px;
+}
