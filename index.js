@@ -1,17 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {})
+// QUESTION: do I need this, since it's not doing anything? Use "defer" in the HTML instead?
 
-// Functionality for Search For A Disney Character interactions
-// 1) User types a name in the input field then hits "Find character"
-//      - Event listener for submit
-//      - But make it a click event, not submit, since it's not a form submission we need to store (we're not updating Disney's API)
-//      - OR...do we need to store the results, so the page persists upon each visit?
+// QUESTION: do I need to store the results, so the page persists upon each visit?
 
 const searchedTerm = document.getElementById("search-field").value;
-
-// Can I also trigger all of the below by "Enter" being pressed on the keyboard?
+document.getElementById("hover-instructions").hidden = true;
 
 document.getElementById("search-field").addEventListener('keypress', e => {
-    if (e.key === "Enter") {getCharacterMatches()}
+    if (e.key === "Enter") getCharacterMatches()
 })
 
 document.getElementById("search-submit").addEventListener('click', e => getCharacterMatches())
@@ -19,7 +15,8 @@ document.getElementById("search-submit").addEventListener('click', e => getChara
 function getCharacterMatches() {
     document.getElementById("search-results").innerHTML = '';
     fetch('https://api.disneyapi.dev/character?pageSize=7450')
-        // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters
+        // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters, in order to access all results
+        // BUT...it seems like this is causing some latency on the page
     .then(res => res.json())
     .then(allCharacters => allCharacters.data.forEach(character => {
         if (character.name.toLowerCase() === document.getElementById("search-field").value.toLowerCase()) {
@@ -29,10 +26,12 @@ function getCharacterMatches() {
 }
 
 function renderMatchedCharacters(obj) {
+    // ISSUE: need to check if the search result is already on the team. If so, button is "added" and disabled
     const charData = obj;
     
     const charCard = document.createElement("div");
     charCard.className = "char-card"
+    charCard.id = `searchCard-${obj.name}-${obj._id}`
     
     const charName = document.createElement("h3");
     charName.textContent = obj.name
@@ -44,21 +43,26 @@ function renderMatchedCharacters(obj) {
     charCard.appendChild(charImage)
 
     const addBtn = document.createElement("button");
-    addBtn.id = "add-button"
-    addBtn.textContent = "Add to Dream Team";
+    addBtn.id = `add-button-${obj.name}-${obj._id}`;
+    addBtn.textContent = "Add";
     charCard.appendChild(addBtn);
     
     document.getElementById("search-results").appendChild(charCard);
 
     addBtn.addEventListener('click', () => addToTeam(charData))
+
+    addBtn.addEventListener('click', () => {
+        addBtn.textContent = "Added";
+        addBtn.disabled = true;
+    })
 }
 
 function addToTeam(charObj) {
-    console.log("Add to dream team -- click test");
-    console.log(charObj.name)
+    document.getElementById("hover-instructions").hidden = false;
 
     const charCard = document.createElement("div");
     charCard.className = "char-card"
+    charCard.id = `teamCard-${charObj.name}-${charObj._id}`
     
     const charName = document.createElement("h3");
     charName.textContent = charObj.name
@@ -69,12 +73,19 @@ function addToTeam(charObj) {
     charImage.className = "char-image";
     charCard.appendChild(charImage)
 
-    const addBtn = document.createElement("button");
-    addBtn.id = "add-button"
-    addBtn.textContent = "Add to Dream Team";
-    charCard.appendChild(addBtn);    
+    const removeBtn = document.createElement("button");
+    removeBtn.id = `remove-button-${charObj.name}-${charObj._id}`;
+    removeBtn.textContent = "Remove";
+    charCard.appendChild(removeBtn);    
 
     document.getElementById("team-cards").appendChild(charCard);
+
+    removeBtn.addEventListener('click', (e) => {
+        charCard.remove();
+        // ADD CODE HERE TO HIDE THE HOVER INSTRUCTIONS IF THERE AREN'T ANY CARDS
+        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
+        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
+    })
 
 }
 

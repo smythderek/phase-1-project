@@ -70,6 +70,7 @@ body {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
+    margin-top: 16px;
 }
 
 #search-field {
@@ -83,7 +84,7 @@ body {
     margin-bottom: 10px;
 }
 
-#search-results {
+.cards-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -98,7 +99,6 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    max-width: 20%;
     height: 250px;
     margin: 20px;
     padding: 10px;
@@ -106,5 +106,6 @@ body {
 
 .char-image {
     width: 80%;
+    height: 80%;
     margin-bottom: 10px;
 }
