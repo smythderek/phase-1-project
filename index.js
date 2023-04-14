@@ -11,33 +11,22 @@ const searchedTerm = document.getElementById("search-field").value;
 // Can I also trigger all of the below by "Enter" being pressed on the keyboard?
 
 document.getElementById("search-field").addEventListener('keypress', e => {
-    if (e.key === "Enter") {
-        e.preventDefault();
-        document.getElementById("search-results").innerHTML = '';
-        fetch('https://api.disneyapi.dev/character?pageSize=7450')
-            // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters
-        .then(res => res.json())
-        .then(allCharacters => allCharacters.data.forEach(character => {
-            if (character.name === document.getElementById("search-field").value) {
-                renderMatchedCharacters(character)
-                // ISSUE: I think the search term is case-sensitive -- need to fix this
-            }}
-        ))
-    }
+    if (e.key === "Enter") {getCharacterMatches()}
 })
 
-document.getElementById("search-submit").addEventListener('click', e => {
+document.getElementById("search-submit").addEventListener('click', e => getCharacterMatches())
+
+function getCharacterMatches() {
     document.getElementById("search-results").innerHTML = '';
     fetch('https://api.disneyapi.dev/character?pageSize=7450')
         // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters
     .then(res => res.json())
     .then(allCharacters => allCharacters.data.forEach(character => {
-        if (character.name === document.getElementById("search-field").value) {
+        if (character.name.toLowerCase() === document.getElementById("search-field").value.toLowerCase()) {
             renderMatchedCharacters(character)
-            // ISSUE: I think the search term is case-sensitive -- need to fix this
         }
     }))
-})
+}
 
 function renderMatchedCharacters(obj) {
     const charCard = document.createElement("div");
@@ -49,7 +38,12 @@ function renderMatchedCharacters(obj) {
 
     const charImage = document.createElement("img");
     charImage.setAttribute('src', obj.imageUrl);
+    charImage.className = "char-image";
     charCard.appendChild(charImage)
+
+    const addBtn = document.createElement("button");
+    addBtn.textContent = "Add to Dream Team";
+    charCard.appendChild(addBtn);
     
     // Add in a button to add them to the team
     document.getElementById("search-results").appendChild(charCard);

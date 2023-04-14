@@ -96,8 +96,15 @@ body {
     border: 2px solid;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     max-width: 20%;
-    max-height: 200x;
+    height: 250px;
     margin: 20px;
+    padding: 10px;
+}
+
+.char-image {
+    width: 80%;
+    margin-bottom: 10px;
 }
