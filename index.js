@@ -8,21 +8,51 @@ document.addEventListener('DOMContentLoaded', () => {})
 
 const searchedTerm = document.getElementById("search-field").value;
 
+// Can I also trigger all of the below by "Enter" being pressed on the keyboard?
+
+document.getElementById("search-field").addEventListener('keypress', e => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("search-results").innerHTML = '';
+        fetch('https://api.disneyapi.dev/character?pageSize=7450')
+            // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters
+        .then(res => res.json())
+        .then(allCharacters => allCharacters.data.forEach(character => {
+            if (character.name === document.getElementById("search-field").value) {
+                renderMatchedCharacters(character)
+                // ISSUE: I think the search term is case-sensitive -- need to fix this
+            }}
+        ))
+    }
+})
+
 document.getElementById("search-submit").addEventListener('click', e => {
+    document.getElementById("search-results").innerHTML = '';
     fetch('https://api.disneyapi.dev/character?pageSize=7450')
         // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters
     .then(res => res.json())
-    .then(allCharacters => allCharacters.data.forEach(character => console.log(character.name)))
+    .then(allCharacters => allCharacters.data.forEach(character => {
+        if (character.name === document.getElementById("search-field").value) {
+            renderMatchedCharacters(character)
+            // ISSUE: I think the search term is case-sensitive -- need to fix this
+        }
+    }))
 })
-// This test is running successfully, but I need to figure out how to use filter 
-// And where to use it -- is it in the callback above, or in a separate function below?
 
-function renderCharacterMatches(array) {
-    // const matchesArray = array.filter(character => character.name === "Alladin")
-    // console.log(matchesArray)
-    const namesArray = array.forEach(character => character.name);
-    console.log(namesArray)
+function renderMatchedCharacters(obj) {
+    const charCard = document.createElement("div");
+    charCard.className = "char-card"
+    
+    const charName = document.createElement("h3");
+    charName.textContent = obj.name
+    charCard.appendChild(charName)
 
+    const charImage = document.createElement("img");
+    charImage.setAttribute('src', obj.imageUrl);
+    charCard.appendChild(charImage)
+    
+    // Add in a button to add them to the team
+    document.getElementById("search-results").appendChild(charCard);
 }
 
 
