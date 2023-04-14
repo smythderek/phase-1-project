@@ -29,6 +29,8 @@ function getCharacterMatches() {
 }
 
 function renderMatchedCharacters(obj) {
+    const charData = obj;
+    
     const charCard = document.createElement("div");
     charCard.className = "char-card"
     
@@ -42,11 +44,38 @@ function renderMatchedCharacters(obj) {
     charCard.appendChild(charImage)
 
     const addBtn = document.createElement("button");
+    addBtn.id = "add-button"
     addBtn.textContent = "Add to Dream Team";
     charCard.appendChild(addBtn);
     
-    // Add in a button to add them to the team
     document.getElementById("search-results").appendChild(charCard);
+
+    addBtn.addEventListener('click', () => addToTeam(charData))
+}
+
+function addToTeam(charObj) {
+    console.log("Add to dream team -- click test");
+    console.log(charObj.name)
+
+    const charCard = document.createElement("div");
+    charCard.className = "char-card"
+    
+    const charName = document.createElement("h3");
+    charName.textContent = charObj.name
+    charCard.appendChild(charName)
+
+    const charImage = document.createElement("img");
+    charImage.setAttribute('src', charObj.imageUrl);
+    charImage.className = "char-image";
+    charCard.appendChild(charImage)
+
+    const addBtn = document.createElement("button");
+    addBtn.id = "add-button"
+    addBtn.textContent = "Add to Dream Team";
+    charCard.appendChild(addBtn);    
+
+    document.getElementById("team-cards").appendChild(charCard);
+
 }
 
 
