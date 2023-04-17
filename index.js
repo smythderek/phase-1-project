@@ -25,31 +25,32 @@ function getCharacterMatches() {
     }))
 }
 
+// ADD a message if there are no matching results?
+
 function renderMatchedCharacters(obj) {
     // ISSUE: need to check if the search result is already on the team. If so, button is "added" and disabled
-    const charData = obj;
     
-    const charCard = document.createElement("div");
-    charCard.className = "char-card"
-    charCard.id = `searchCard-${obj.name}-${obj._id}`
+    const charSearchCard = document.createElement("div");
+    charSearchCard.className = "char-search-card"
+    charSearchCard.id = `searchCard-${obj.name}-${obj._id}`
     
     const charName = document.createElement("h3");
     charName.textContent = obj.name
-    charCard.appendChild(charName)
+    charSearchCard.appendChild(charName)
 
     const charImage = document.createElement("img");
     charImage.setAttribute('src', obj.imageUrl);
     charImage.className = "char-image";
-    charCard.appendChild(charImage)
+    charSearchCard.appendChild(charImage)
 
     const addBtn = document.createElement("button");
     addBtn.id = `add-button-${obj.name}-${obj._id}`;
     addBtn.textContent = "Add";
-    charCard.appendChild(addBtn);
+    charSearchCard.appendChild(addBtn);
     
-    document.getElementById("search-results").appendChild(charCard);
+    document.getElementById("search-results").appendChild(charSearchCard);
 
-    addBtn.addEventListener('click', () => addToTeam(charData))
+    addBtn.addEventListener('click', () => addToTeam(obj))
 
     addBtn.addEventListener('click', () => {
         addBtn.textContent = "Added";
@@ -60,25 +61,36 @@ function renderMatchedCharacters(obj) {
 function addToTeam(charObj) {
     document.getElementById("hover-instructions").hidden = false;
 
+    const charContainer = document.createElement("div");
+    charContainer.id = `charContainer-${charObj.name}-${charObj._id}`;
+    charContainer.className = "char-container";
+    document.getElementById("team-cards").appendChild(charContainer);
+
     const charCard = document.createElement("div");
-    charCard.className = "char-card"
-    charCard.id = `teamCard-${charObj.name}-${charObj._id}`
+    charCard.id = `teamCard-${charObj.name}-${charObj._id}`;
+    charCard.className = "char-team-card";
+    charContainer.appendChild(charCard); 
     
     const charName = document.createElement("h3");
-    charName.textContent = charObj.name
-    charCard.appendChild(charName)
+    charName.textContent = charObj.name;
+    charCard.appendChild(charName);
 
     const charImage = document.createElement("img");
     charImage.setAttribute('src', charObj.imageUrl);
     charImage.className = "char-image";
-    charCard.appendChild(charImage)
+    charCard.appendChild(charImage);
+
+    const charDetails = document.createElement("div");
+    charDetails.id = `details-${charObj.name}-${charObj._id}`;
+    charDetails.className = "char-details";
+    charDetails.innerHTML = `Films: ${charObj.films}`;
+    charCard.appendChild(charDetails);
+    charDetails.hidden = true;
 
     const removeBtn = document.createElement("button");
     removeBtn.id = `remove-button-${charObj.name}-${charObj._id}`;
     removeBtn.textContent = "Remove";
     charCard.appendChild(removeBtn);    
-
-    document.getElementById("team-cards").appendChild(charCard);
 
     removeBtn.addEventListener('click', (e) => {
         charCard.remove();
@@ -86,6 +98,10 @@ function addToTeam(charObj) {
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
     })
+
+    charImage.addEventListener("mouseover", () => charDetails.hidden = false);
+    charImage.addEventListener("mouseout", () => charDetails.hidden = true);
+    // QUESTION: Do I want to enable to hover-to-see-more-details for the search results too?
 
 }
 

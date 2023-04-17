@@ -29,7 +29,7 @@ body {
     font-size: 16px;
 }
 
-#team-container {
+#team-build-container {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -46,9 +46,8 @@ body {
     color: black;
     text-align: center;
     justify-content: flex-start;
-    width: 50%;
+    width: 20%;
     border-right: 1px solid;
-    height: 100vh;
 }
 
 #your-team {
@@ -60,7 +59,7 @@ body {
     color: black;
     text-align: center;
     justify-content: flex-start;
-    width: 50%;
+    width: 80%;
     border-left: 1px solid;
 }
 
@@ -84,7 +83,13 @@ body {
     margin-bottom: 10px;
 }
 
-.cards-container {
+.search-results-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -93,13 +98,13 @@ body {
     justify-content: center;
 }
 
-.char-card {
+.char-search-card {
     border: 2px solid;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 250px;
+    width: 80%;
     margin: 20px;
     padding: 10px;
 }
@@ -108,4 +113,26 @@ body {
     width: 80%;
     height: 80%;
     margin-bottom: 10px;
+}
+
+.char-team-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 250px;
+    padding: 10px;
+}
+
+.char-container {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.char-details {
+    width: 80%;
+    margin: 10px;
+    text-align: center;
 }
