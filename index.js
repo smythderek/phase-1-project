@@ -83,9 +83,24 @@ function addToTeam(charObj) {
     const charDetails = document.createElement("div");
     charDetails.id = `details-${charObj.name}-${charObj._id}`;
     charDetails.className = "char-details";
-    charDetails.innerHTML = `Films: ${charObj.films}`;
     charCard.appendChild(charDetails);
     charDetails.hidden = true;
+
+    const charMovies = document.createElement("p");
+    // function addNoneIfFilmsIsEmpty() {
+    //     if (charObj.films.length === 0) {
+    //         charMovies.innerHTML = '<b>Movies: </b> None';
+    //     }
+    //     else charMovies.innerHTML = '<b>Movies: </b>' + `${charObj.films.join(', ')}`;
+    // };
+    addNone(charObj.films, charMovies, "Movies");
+    charDetails.appendChild(charMovies);
+
+    // QUESTION: is it possible to refactor the addNone functionality so it's not redundant?
+
+    const charShortFilms = document.createElement("p");
+    addNone(charObj.shortFilms, charShortFilms, "Short Films");
+    charDetails.appendChild(charShortFilms);
 
     const removeBtn = document.createElement("button");
     removeBtn.id = `remove-button-${charObj.name}-${charObj._id}`;
@@ -105,6 +120,12 @@ function addToTeam(charObj) {
 
 }
 
+function addNone(array, element, title) {
+    if (array.length === 0) {
+        element.innerHTML = `<b>${title}: </b> None`;
+    }
+    else element.innerHTML = `<b>${title}: </b>` + `${array.join(', ')}`;
+}
 
 // 2) Submit event fetches data from Disney API -- all characters
 //      - .filter() through the all-character results to only return an array of characters whose names CONTAIN the query
