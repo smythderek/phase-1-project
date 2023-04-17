@@ -28,7 +28,6 @@ function getCharacterMatches() {
 // ADD a message if there are no matching results?
 
 function renderMatchedCharacters(obj) {
-    // ISSUE: need to check if the search result is already on the team. If so, button is "added" and disabled
     
     const charSearchCard = document.createElement("div");
     charSearchCard.className = "char-search-card"
@@ -74,25 +73,13 @@ function addToTeam(charObj) {
     const charName = document.createElement("h3");
     charName.textContent = charObj.name;
     charCard.appendChild(charName);
+    // PUT THIS IN A HOVER
+    // Along with the counts of films, shorts, etc
 
     const charImage = document.createElement("img");
     charImage.setAttribute('src', charObj.imageUrl);
     charImage.className = "char-image";
     charCard.appendChild(charImage);
-
-    const charDetails = document.createElement("div");
-    charDetails.id = `details-${charObj.name}-${charObj._id}`;
-    charDetails.className = "char-details";
-    charCard.appendChild(charDetails);
-    charDetails.hidden = true;
-
-    const charMovies = document.createElement("p");
-    addNone(charObj.films, charMovies, "Movies");
-    charDetails.appendChild(charMovies);
-
-    const charShortFilms = document.createElement("p");
-    addNone(charObj.shortFilms, charShortFilms, "Short Films");
-    charDetails.appendChild(charShortFilms);
 
     const removeBtn = document.createElement("button");
     removeBtn.id = `remove-button-${charObj.name}-${charObj._id}`;
@@ -106,18 +93,55 @@ function addToTeam(charObj) {
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
     })
 
+    const charDetails = document.createElement("div");
+    charDetails.id = `details-${charObj.name}-${charObj._id}`;
+    charDetails.className = "char-details";
+    document.getElementById("more-details").appendChild(charDetails);
+    charDetails.hidden = true;
+
+    const charMovies = document.createElement("p");
+    renderCharDetails(charObj.films, charMovies, "Movies");
+    charDetails.appendChild(charMovies);
+
+    const charShortFilms = document.createElement("p");
+    renderCharDetails(charObj.shortFilms, charShortFilms, "Short Films");
+    charDetails.appendChild(charShortFilms);
+
+    const charTvShows = document.createElement("p");
+    renderCharDetails(charObj.tvShows, charTvShows, "TV Shows");
+    charDetails.appendChild(charTvShows);
+
+    const charVideoGames = document.createElement("p");
+    renderCharDetails(charObj.tvShows, charVideoGames, "Video Games");
+    charDetails.appendChild(charVideoGames);
+
+    const charParkAttractions = document.createElement("p")
+    renderCharDetails(charObj.parkAttractions, charParkAttractions, "Park Attractions")
+    charDetails.appendChild(charParkAttractions);
+
     charImage.addEventListener("mouseover", () => charDetails.hidden = false);
     charImage.addEventListener("mouseout", () => charDetails.hidden = true);
-    // QUESTION: Do I want to enable to hover-to-see-more-details for the search results too?
-
+    // CHANGE THIS TO A CLICK EVENT, need a "Show/Hide details" button
 }
 
-function addNone(array, element, title) {
+function renderCharDetails(array, element, title) {
     if (array.length === 0) {
         element.innerHTML = `<b>${title}: </b> None`;
     }
     else element.innerHTML = `<b>${title}: </b>` + `${array.join(', ')}`;
 }
+
+// Limit the team members to four or five, and keep it on one row -- set class to nowrap
+// Create a full-width div below that will show all the character's details
+// Create a single function for this? Might not be necessary
+
+// For team member card:
+    // Set image dimensions
+    // Remove name above
+    // Show name on hover
+        // Is that interesting enough?
+        // Maybe incl the number of films and short films?
+    // Click somehwere to view full details (which shows in the div below)
 
 // 2) Submit event fetches data from Disney API -- all characters
 //      - .filter() through the all-character results to only return an array of characters whose names CONTAIN the query
