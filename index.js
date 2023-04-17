@@ -87,16 +87,8 @@ function addToTeam(charObj) {
     charDetails.hidden = true;
 
     const charMovies = document.createElement("p");
-    // function addNoneIfFilmsIsEmpty() {
-    //     if (charObj.films.length === 0) {
-    //         charMovies.innerHTML = '<b>Movies: </b> None';
-    //     }
-    //     else charMovies.innerHTML = '<b>Movies: </b>' + `${charObj.films.join(', ')}`;
-    // };
     addNone(charObj.films, charMovies, "Movies");
     charDetails.appendChild(charMovies);
-
-    // QUESTION: is it possible to refactor the addNone functionality so it's not redundant?
 
     const charShortFilms = document.createElement("p");
     addNone(charObj.shortFilms, charShortFilms, "Short Films");

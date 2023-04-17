@@ -125,7 +125,7 @@ body {
 }
 
 .char-container {
-    width: 90%;
+    max-width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,5 +134,5 @@ body {
 .char-details {
     width: 80%;
     margin: 10px;
-    text-align: center;
+    text-align: left;
 }
