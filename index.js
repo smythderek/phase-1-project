@@ -27,6 +27,8 @@ function getCharacterMatches() {
 
 // ADD a message if there are no matching results?
 
+let teamCount = 0;
+
 function renderMatchedCharacters(obj) {
     
     const charSearchCard = document.createElement("div");
@@ -49,15 +51,20 @@ function renderMatchedCharacters(obj) {
     
     document.getElementById("search-results").appendChild(charSearchCard);
 
-    addBtn.addEventListener('click', () => addToTeam(obj))
-
     addBtn.addEventListener('click', () => {
-        addBtn.textContent = "Added";
-        addBtn.disabled = true;
+        if (teamCount < 5) {
+            addToTeam(obj);
+            addBtn.textContent = "Added";
+            addBtn.disabled = true;
+        }
+        else alert("Your team is full!");  // can we handle this more elegantly? disable all addBtn?
     })
 }
 
 function addToTeam(charObj) {
+    teamCount++;
+    console.log(teamCount);
+
     document.getElementById("hover-instructions").hidden = false;
 
     const charContainer = document.createElement("div");
@@ -81,13 +88,22 @@ function addToTeam(charObj) {
     charImage.className = "char-image";
     charCard.appendChild(charImage);
 
+    const detailsButton = document.createElement("button");
+    detailsButton.id = `details-button`;
+    detailsButton.className = "button";
+    detailsButton.textContent = "Show details";
+    charCard.appendChild(detailsButton);
+
     const removeBtn = document.createElement("button");
     removeBtn.id = `remove-button-${charObj.name}-${charObj._id}`;
+    removeBtn.className = "button";
     removeBtn.textContent = "Remove";
     charCard.appendChild(removeBtn);    
 
     removeBtn.addEventListener('click', (e) => {
-        charCard.remove();
+        teamCount--;
+        console.log(teamCount);
+        charContainer.remove();
         // ADD CODE HERE TO HIDE THE HOVER INSTRUCTIONS IF THERE AREN'T ANY CARDS
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
