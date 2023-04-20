@@ -96,17 +96,22 @@ body {
 #team-cards {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    align-items: center;
+    width: 90%;
+    align-items: flex-start;
     justify-content: space-evenly;
-    height: auto;
+    min-height: 300px;
+    padding: 10px;
 }
 
 #more-details {
-    width: 100%;
-    margin: 10px;
-    text-align: left;
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: flex-start;
+    align-content: left;
+    justify-content: left;
     height: auto;
+    text-align: left;
 }
 
 .char-search-card {
@@ -116,14 +121,22 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 80%;
-    height: 500px;
+    height: 200px;
     margin: 20px;
-    padding: 10px;
+    padding: 5px;
 }
 
-.char-image {
+.char-search-image {
+    border: 1px solid;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 100px;
+    margin-bottom: 10px;
+}
+
+.char-team-image {
+    border: 1px solid;
+    max-width: 100%;
+    max-height: 150px;
     margin-bottom: 10px;
 }
 
@@ -132,20 +145,18 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 200px;
+    min-height: 250px;
+    max-width: 200px;
     padding: 10px;
 }
 
 .char-container {
     max-width: 80%;
+    max-height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.char-details {
-    width: 80%;
-    text-align: left;
+    border: 2px solid;
 }
 
 .button {

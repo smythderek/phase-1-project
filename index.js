@@ -41,7 +41,7 @@ function renderMatchedCharacters(obj) {
 
     const charImage = document.createElement("img");
     charImage.setAttribute('src', obj.imageUrl);
-    charImage.className = "char-image";
+    charImage.className = "char-search-image";
     charSearchCard.appendChild(charImage)
 
     const addBtn = document.createElement("button");
@@ -67,25 +67,27 @@ function addToTeam(charObj) {
 
     document.getElementById("hover-instructions").hidden = false;
 
-    const charContainer = document.createElement("div");
-    charContainer.id = `charContainer-${charObj.name}-${charObj._id}`;
-    charContainer.className = "char-container";
-    document.getElementById("team-cards").appendChild(charContainer);
+    // const charContainer = document.createElement("div");
+    // charContainer.id = `charContainer-${charObj.name}-${charObj._id}`;
+    // charContainer.className = "char-container";
+    // document.getElementById("team-cards").appendChild(charContainer);
+
+    const teamCards = document.getElementById("team-cards");
 
     const charCard = document.createElement("div");
     charCard.id = `teamCard-${charObj.name}-${charObj._id}`;
     charCard.className = "char-team-card";
-    charContainer.appendChild(charCard); 
+    teamCards.appendChild(charCard); 
     
     const charName = document.createElement("h3");
     charName.textContent = charObj.name;
-    charCard.appendChild(charName);
+    // charCard.appendChild(charName);
     // PUT THIS IN A HOVER
     // Along with the counts of films, shorts, etc
 
     const charImage = document.createElement("img");
     charImage.setAttribute('src', charObj.imageUrl);
-    charImage.className = "char-image";
+    charImage.className = "char-team-image";
     charCard.appendChild(charImage);
 
     const detailsButton = document.createElement("button");
@@ -103,7 +105,7 @@ function addToTeam(charObj) {
     removeBtn.addEventListener('click', (e) => {
         teamCount--;
         console.log(teamCount);
-        charContainer.remove();
+        charCard.remove();
         // ADD CODE HERE TO HIDE THE HOVER INSTRUCTIONS IF THERE AREN'T ANY CARDS
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
@@ -111,7 +113,6 @@ function addToTeam(charObj) {
 
     const charDetails = document.createElement("div");
     charDetails.id = `details-${charObj.name}-${charObj._id}`;
-    charDetails.className = "char-details";
     document.getElementById("more-details").appendChild(charDetails);
     charDetails.hidden = true;
 
