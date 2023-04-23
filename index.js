@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {})
 // QUESTION: do I need to store the results, so the page persists upon each visit?
 
 const searchedTerm = document.getElementById("search-field").value;
-document.getElementById("hover-instructions").hidden = true;
 
 document.getElementById("search-field").addEventListener('keypress', e => {
     if (e.key === "Enter") getCharacterMatches()
@@ -63,14 +62,6 @@ function renderMatchedCharacters(obj) {
 
 function addToTeam(charObj) {
     teamCount++;
-    console.log(teamCount);
-
-    document.getElementById("hover-instructions").hidden = false;
-
-    // const charContainer = document.createElement("div");
-    // charContainer.id = `charContainer-${charObj.name}-${charObj._id}`;
-    // charContainer.className = "char-container";
-    // document.getElementById("team-cards").appendChild(charContainer);
 
     const teamCards = document.getElementById("team-cards");
 
@@ -78,17 +69,21 @@ function addToTeam(charObj) {
     charCard.id = `teamCard-${charObj.name}-${charObj._id}`;
     charCard.className = "char-team-card";
     teamCards.appendChild(charCard); 
-    
-    const charName = document.createElement("h3");
-    charName.textContent = charObj.name;
-    // charCard.appendChild(charName);
-    // PUT THIS IN A HOVER
-    // Along with the counts of films, shorts, etc
+
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "image-container";
+    charCard.appendChild(imageContainer);
 
     const charImage = document.createElement("img");
     charImage.setAttribute('src', charObj.imageUrl);
-    charImage.className = "char-team-image";
-    charCard.appendChild(charImage);
+    charImage.className = "char-team-image-base";
+    imageContainer.appendChild(charImage);
+
+    const charName = document.createElement("h3");
+    charName.className = "char-name";
+    charName.textContent = charObj.name;
+    charName.hidden = true;
+    imageContainer.appendChild(charName);
 
     const detailsButton = document.createElement("button");
     detailsButton.id = `details-button`;
@@ -106,7 +101,6 @@ function addToTeam(charObj) {
         teamCount--;
         console.log(teamCount);
         charCard.remove();
-        // ADD CODE HERE TO HIDE THE HOVER INSTRUCTIONS IF THERE AREN'T ANY CARDS
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
     })
@@ -136,9 +130,31 @@ function addToTeam(charObj) {
     renderCharDetails(charObj.parkAttractions, charParkAttractions, "Park Attractions")
     charDetails.appendChild(charParkAttractions);
 
-    charImage.addEventListener("mouseover", () => charDetails.hidden = false);
-    charImage.addEventListener("mouseout", () => charDetails.hidden = true);
-    // CHANGE THIS TO A CLICK EVENT, need a "Show/Hide details" button
+    imageContainer.addEventListener("mouseover", () => {
+        charImage.className = "char-team-image-hover";
+        charName.hidden = false;
+    })
+
+    imageContainer.addEventListener("mouseout", () => {
+        charImage.className = "char-team-image-base";
+        charName.hidden = true;
+    })
+
+    detailsButton.addEventListener("click", () => {
+        if (detailsButton.textContent === "Show details") {
+            charDetails.hidden = false;
+            detailsButton.textContent = "Hide details";
+        }
+        else {
+            charDetails.hidden = true;
+            detailsButton.textContent = "Show details";
+        }
+    });
+
+// ISSUES:
+    // Limit only one character's details can be shown at a time
+    // 
+
 }
 
 function renderCharDetails(array, element, title) {
@@ -148,9 +164,6 @@ function renderCharDetails(array, element, title) {
     else element.innerHTML = `<b>${title}: </b>` + `${array.join(', ')}`;
 }
 
-// Limit the team members to four or five, and keep it on one row -- set class to nowrap
-// Create a full-width div below that will show all the character's details
-// Create a single function for this? Might not be necessary
 
 // For team member card:
     // Set image dimensions
