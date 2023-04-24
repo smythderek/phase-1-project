@@ -27,8 +27,6 @@ function getCharacterMatches() {
     .then(allCharacters => allCharacters.data.forEach(character => { // QUESTION: could I use .filter() here?
         if (character.name.toLowerCase() === document.getElementById("search-field").value.toLowerCase()) {
             renderMatchedCharacters(character);
-            searchCount++;
-            console.log(searchCount);
         };
     }));
     
@@ -36,6 +34,7 @@ function getCharacterMatches() {
 
 // ISSUE:
     // Add a message if there are no matching results? Tried this code, but not sure where to place it
+    // NOTE: I would increment searchCount++ with each returned character
         // if (searchCount === 0) {
         //     const emptySearch = document.createElement("p");
         //     emptySearch.textContent = "No matches for that name. Please try again."
@@ -60,8 +59,8 @@ function renderMatchedCharacters(obj) {
     const addBtn = document.createElement("button");
     addBtn.id = `add-button-${obj.name}-${obj._id}`;
     charSearchCard.appendChild(addBtn);
+    // Handles characters who were previously in the team then removed, so they can be added in subsequent searches
     if (!teamIds.includes(obj._id)) {
-        console.log("Not in the team");
         addBtn.textContent = "Add";
     }; 
     
@@ -73,7 +72,7 @@ function renderMatchedCharacters(obj) {
             addBtn.textContent = "Added";
             addBtn.disabled = true;
         }
-        else alert("Your team is full!");  // can we handle this more elegantly? disable all addBtn?
+        else alert("Your team is full!");  // Can I handle this more elegantly? disable all addBtn?
     })
 
     // If the search result is already on the team, prevent adding them to the team again
@@ -86,7 +85,6 @@ function renderMatchedCharacters(obj) {
 function addToTeam(charObj) {
     teamCount++;
     teamIds.push(charObj._id);
-    console.log(teamIds);
 
     const teamCards = document.getElementById("team-cards");
 
@@ -131,9 +129,12 @@ function addToTeam(charObj) {
         const idIndex = teamIds.indexOf(charObj._id);
         const removedID = teamIds.splice(idIndex, 1); // This works, but is this good syntax?
         
-        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
-        // ISSUE: This is throwing an error but the UX is working
-        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
+        // If the team member is still showing as a search result, re-enable the "Add" button
+        // If the team member is NOT still showing as a search result, that's handled by the renderMatchedCharacters function
+        if (document.getElementById(`add-button-${charObj.name}-${charObj._id}`)) {
+            document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
+            document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
+        }
     })
 
     const charDetails = document.createElement("div");
@@ -176,15 +177,13 @@ function addToTeam(charObj) {
             charDetails.hidden = false;
             detailsButton.textContent = "Hide details";
             charCard.className = "char-container-with-details";
-            showCount = 1;
-            console.log(showCount);
+            // showCount = 1;
         }
         else {
             charDetails.hidden = true;
             detailsButton.textContent = "Show details";
             charCard.className = "char-team-card";
-            showCount = 0;
-            console.log(showCount);
+            // showCount = 0;
         }
     });
 
