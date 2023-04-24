@@ -99,7 +99,6 @@ body {
     width: 90%;
     align-items: flex-start;
     justify-content: space-evenly;
-    min-height: 200px;
     padding: 10px;
 }
 
@@ -152,7 +151,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 250px;
+    min-height: 200px;
     max-width: 200px;
     padding: 10px;
 }
@@ -180,4 +179,14 @@ body {
 .char-name {
     position: absolute;
     color: white;
+}
+
+.char-container-with-details {
+    border: 5px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px;
+    max-width: 200px;
+    padding: 10px;
 }

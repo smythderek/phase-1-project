@@ -24,7 +24,9 @@ function getCharacterMatches() {
     }))
 }
 
-// ADD a message if there are no matching results?
+// ISSUES:
+    // Add a message if there are no matching results?
+    // If the search is re-run for a character already on the team, disable the Add button
 
 let teamCount = 0;
 
@@ -144,16 +146,18 @@ function addToTeam(charObj) {
         if (detailsButton.textContent === "Show details") {
             charDetails.hidden = false;
             detailsButton.textContent = "Hide details";
+            charCard.className = "char-container-with-details";
         }
         else {
             charDetails.hidden = true;
             detailsButton.textContent = "Show details";
+            charCard.className = "char-team-card";
         }
     });
 
 // ISSUES:
     // Limit only one character's details can be shown at a time
-    // 
+    // Thicken the border for the selected character (to show relationship between image and details)
 
 }
 
@@ -163,36 +167,3 @@ function renderCharDetails(array, element, title) {
     }
     else element.innerHTML = `<b>${title}: </b>` + `${array.join(', ')}`;
 }
-
-
-// For team member card:
-    // Set image dimensions
-    // Remove name above
-    // Show name on hover
-        // Is that interesting enough?
-        // Maybe incl the number of films and short films?
-    // Click somehwere to view full details (which shows in the div below)
-
-// 2) Submit event fetches data from Disney API -- all characters
-//      - .filter() through the all-character results to only return an array of characters whose names CONTAIN the query
-// 3) Render all of those matches into div cards
-//      - Image, name, and "Add to team" button
-//      - Once "Add to team" is clicked, disable that button and/or change it to "Already on your Dream Team!"
-
-
-
-
-// Functionality for Your Dream Team interactions
-// 4) Add chosen character's card to the "Your Dream Team" section
-//      - Image, name
-//      - Button to remove them from the team
-//      - Have rank order for the chosen ones?
-//      - Is there a limit of five or do we scrap that?
-// 5) Upon hovering over the card of a dream team member, show an overlay with the following stats:
-//      - Total number of films the character has appeared in
-//      - Total number of short films the character has appeared in
-//      - Total number of animated shows the character has appeared in
-//      - Total number of video games the character has appeared in
-//      - Total number of park attractions the character has appeared in
-//      - List of allies for this character
-//      - List of enemies for this character
