@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {})
 
 // QUESTION: do I need to store the results, so the page persists upon each visit?
 
-let teamCount = 0;
-let showCount = 0;
 let teamIds = [];
+let teamCount = 0; // Could I make this teamIds.length? Tried that but the 5 max wasn't being enforced
+let showCount = 0;
 let searchCount = 0;
 const searchedTerm = document.getElementById("search-field").value;
 
@@ -59,8 +59,11 @@ function renderMatchedCharacters(obj) {
 
     const addBtn = document.createElement("button");
     addBtn.id = `add-button-${obj.name}-${obj._id}`;
-    addBtn.textContent = "Add";
     charSearchCard.appendChild(addBtn);
+    if (!teamIds.includes(obj._id)) {
+        console.log("Not in the team");
+        addBtn.textContent = "Add";
+    }; 
     
     document.getElementById("search-results").appendChild(charSearchCard);
 
@@ -123,12 +126,14 @@ function addToTeam(charObj) {
         teamCount--;
 
         charCard.remove();
-        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
-        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
-        
+
         // Remove the ID from teamIds array so the character can be re-added in subsequent searches
         const idIndex = teamIds.indexOf(charObj._id);
-        const removedID = teamIds.splice(idIndex, 1);
+        const removedID = teamIds.splice(idIndex, 1); // This works, but is this good syntax?
+        
+        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
+        // ISSUE: This is throwing an error but the UX is working
+        document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
     })
 
     const charDetails = document.createElement("div");
