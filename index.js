@@ -121,10 +121,14 @@ function addToTeam(charObj) {
 
     removeBtn.addEventListener('click', (e) => {
         teamCount--;
-        console.log(teamCount);
+
         charCard.remove();
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
         document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
+        
+        // Remove the ID from teamIds array so the character can be re-added in subsequent searches
+        const idIndex = teamIds.indexOf(charObj._id);
+        const removedID = teamIds.splice(idIndex, 1);
     })
 
     const charDetails = document.createElement("div");
