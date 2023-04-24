@@ -1,21 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {})
-// QUESTION: do I need this, since it's not doing anything? Use "defer" in the HTML instead?
-
-// QUESTION: do I need to store the results, so the page persists upon each visit?
-
 let teamIds = [];
-let teamCount = 0; // Could I make this teamIds.length? Tried that but the 5 max wasn't being enforced
-let showCount = 0;
+let teamCount = 0; // Could I make this teamIds.length? Tried that but the 5 max wasn't being enforced correctly
+// let showCount = 0; Not being used currently
 let searchCount = 0;
 const searchedTerm = document.getElementById("search-field").value;
 
 document.getElementById("search-field").addEventListener('keypress', e => {
-    if (e.key === "Enter") getCharacterMatches();
+    if (e.key === "Enter") {
+        searchCount = 0;
+        getCharacterMatches();
+    }
 });
 
 document.getElementById("search-submit").addEventListener('click', e => {
+    searchCount = 0;
     getCharacterMatches();
-    console.log(searchCount);
 });
 
 function getCharacterMatches() {
@@ -24,25 +22,27 @@ function getCharacterMatches() {
         // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters, in order to access all results
         // BUT...it seems like this is causing some latency on the page
     .then(res => res.json())
-    .then(allCharacters => allCharacters.data.forEach(character => { // QUESTION: could I use .filter() here?
+    .then(allCharacters => allCharacters.data.forEach(character => { 
         if (character.name.toLowerCase() === document.getElementById("search-field").value.toLowerCase()) {
             renderMatchedCharacters(character);
+        }
+    }))
+    .then(finishedSearch => {
+        if (searchCount === 0) {
+            console.log(searchCount);
+            const emptySearch = document.createElement("p");
+            emptySearch.id = "empty-search-message";
+            emptySearch.textContent = "No matches for that name. Please try again."
+            document.getElementById("search-results").appendChild(emptySearch);
+            console.log("Empty search");
         };
-    }));
-    
-};
-
-// ISSUE:
-    // Add a message if there are no matching results? Tried this code, but not sure where to place it
-    // NOTE: I would increment searchCount++ with each returned character
-        // if (searchCount === 0) {
-        //     const emptySearch = document.createElement("p");
-        //     emptySearch.textContent = "No matches for that name. Please try again."
-        //     document.getElementById("search-results").appendChild(emptySearch);
-        //     console.log("Empty search");
-        // };
+    });
+};      
 
 function renderMatchedCharacters(obj) {
+    searchCount++;
+    console.log(searchCount);
+
     const charSearchCard = document.createElement("div");
     charSearchCard.className = "char-search-card"
     charSearchCard.id = `searchCard-${obj.name}-${obj._id}`
@@ -72,7 +72,7 @@ function renderMatchedCharacters(obj) {
             addBtn.textContent = "Added";
             addBtn.disabled = true;
         }
-        else alert("Your team is full!");  // Can I handle this more elegantly? disable all addBtn?
+        else alert("Your team is full!");
     })
 
     // If the search result is already on the team, prevent adding them to the team again

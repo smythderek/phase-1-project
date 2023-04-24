@@ -190,3 +190,7 @@ body {
     max-width: 200px;
     padding: 10px;
 }
+
+#empty-search-message {
+    color: white;
+}
