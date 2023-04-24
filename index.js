@@ -3,13 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {})
 
 // QUESTION: do I need to store the results, so the page persists upon each visit?
 
+let teamCount = 0;
+let showCount = 0;
+let teamIds = [];
+let searchCount = 0;
 const searchedTerm = document.getElementById("search-field").value;
 
 document.getElementById("search-field").addEventListener('keypress', e => {
-    if (e.key === "Enter") getCharacterMatches()
-})
+    if (e.key === "Enter") getCharacterMatches();
+});
 
-document.getElementById("search-submit").addEventListener('click', e => getCharacterMatches())
+document.getElementById("search-submit").addEventListener('click', e => {
+    getCharacterMatches();
+    console.log(searchCount);
+});
 
 function getCharacterMatches() {
     document.getElementById("search-results").innerHTML = '';
@@ -17,21 +24,26 @@ function getCharacterMatches() {
         // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters, in order to access all results
         // BUT...it seems like this is causing some latency on the page
     .then(res => res.json())
-    .then(allCharacters => allCharacters.data.forEach(character => {
+    .then(allCharacters => allCharacters.data.forEach(character => { // QUESTION: could I use .filter() here?
         if (character.name.toLowerCase() === document.getElementById("search-field").value.toLowerCase()) {
-            renderMatchedCharacters(character)
-        }
-    }))
-}
+            renderMatchedCharacters(character);
+            searchCount++;
+            console.log(searchCount);
+        };
+    }));
+    
+};
 
-// ISSUES:
-    // Add a message if there are no matching results?
-    // If the search is re-run for a character already on the team, disable the Add button
-
-let teamCount = 0;
+// ISSUE:
+    // Add a message if there are no matching results? Tried this code, but not sure where to place it
+        // if (searchCount === 0) {
+        //     const emptySearch = document.createElement("p");
+        //     emptySearch.textContent = "No matches for that name. Please try again."
+        //     document.getElementById("search-results").appendChild(emptySearch);
+        //     console.log("Empty search");
+        // };
 
 function renderMatchedCharacters(obj) {
-    
     const charSearchCard = document.createElement("div");
     charSearchCard.className = "char-search-card"
     charSearchCard.id = `searchCard-${obj.name}-${obj._id}`
@@ -60,10 +72,18 @@ function renderMatchedCharacters(obj) {
         }
         else alert("Your team is full!");  // can we handle this more elegantly? disable all addBtn?
     })
+
+    // If the search result is already on the team, prevent adding them to the team again
+    if (teamIds.includes(obj._id)) {
+        addBtn.textContent = "Added";
+        addBtn.disabled = true;
+    }
 }
 
 function addToTeam(charObj) {
     teamCount++;
+    teamIds.push(charObj._id);
+    console.log(teamIds);
 
     const teamCards = document.getElementById("team-cards");
 
@@ -147,18 +167,20 @@ function addToTeam(charObj) {
             charDetails.hidden = false;
             detailsButton.textContent = "Hide details";
             charCard.className = "char-container-with-details";
+            showCount = 1;
+            console.log(showCount);
         }
         else {
             charDetails.hidden = true;
             detailsButton.textContent = "Show details";
             charCard.className = "char-team-card";
+            showCount = 0;
+            console.log(showCount);
         }
     });
 
-// ISSUES:
-    // Limit only one character's details can be shown at a time
-    // Thicken the border for the selected character (to show relationship between image and details)
-
+// ISSUE:
+    // When a character's details are shown, need to disable all other "show details" buttons
 }
 
 function renderCharDetails(array, element, title) {
