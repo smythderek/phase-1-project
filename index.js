@@ -1,5 +1,5 @@
 let teamIds = [];
-let teamCount = 0; // Could I make this teamIds.length? Tried that but the 5 max wasn't being enforced correctly
+let teamCount = 0
 // let showCount = 0; Not being used currently
 let searchCount = 0;
 const searchedTerm = document.getElementById("search-field").value;
@@ -29,19 +29,16 @@ function getCharacterMatches() {
     }))
     .then(finishedSearch => {
         if (searchCount === 0) {
-            console.log(searchCount);
             const emptySearch = document.createElement("p");
             emptySearch.id = "empty-search-message";
             emptySearch.textContent = "No matches for that name. Please try again."
             document.getElementById("search-results").appendChild(emptySearch);
-            console.log("Empty search");
         };
     });
 };      
 
 function renderMatchedCharacters(obj) {
     searchCount++;
-    console.log(searchCount);
 
     const charSearchCard = document.createElement("div");
     charSearchCard.className = "char-search-card"
