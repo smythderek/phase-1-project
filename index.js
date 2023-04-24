@@ -105,35 +105,18 @@ function addToTeam(charObj) {
     charName.hidden = true;
     imageContainer.appendChild(charName);
 
+    const removeBtn = document.createElement("button");
+    removeBtn.id = `remove-button-${charObj.name}-${charObj._id}`;
+    removeBtn.className = "button";
+    removeBtn.textContent = "Remove";
+    charCard.appendChild(removeBtn); 
+    
     const detailsButton = document.createElement("button");
     detailsButton.id = `details-button`;
     detailsButton.className = "button";
     detailsButton.textContent = "Show details";
     charCard.appendChild(detailsButton);
-
-    const removeBtn = document.createElement("button");
-    removeBtn.id = `remove-button-${charObj.name}-${charObj._id}`;
-    removeBtn.className = "button";
-    removeBtn.textContent = "Remove";
-    charCard.appendChild(removeBtn);    
-
-    removeBtn.addEventListener('click', (e) => {
-        teamCount--;
-
-        charCard.remove();
-
-        // Remove the ID from teamIds array so the character can be re-added in subsequent searches
-        const idIndex = teamIds.indexOf(charObj._id);
-        const removedID = teamIds.splice(idIndex, 1); // This works, but is this good syntax?
-        
-        // If the team member is still showing as a search result, re-enable the "Add" button
-        // If the team member is NOT still showing as a search result, that's handled by the renderMatchedCharacters function
-        if (document.getElementById(`add-button-${charObj.name}-${charObj._id}`)) {
-            document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
-            document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
-        }
-    })
-
+    
     const charDetails = document.createElement("div");
     charDetails.id = `details-${charObj.name}-${charObj._id}`;
     document.getElementById("more-details").appendChild(charDetails);
@@ -158,6 +141,24 @@ function addToTeam(charObj) {
     const charParkAttractions = document.createElement("p")
     renderCharDetails(charObj.parkAttractions, charParkAttractions, "Park Attractions")
     charDetails.appendChild(charParkAttractions);
+
+    removeBtn.addEventListener('click', (e) => {
+        teamCount--;
+
+        charCard.remove();
+        document.getElementById(`details-${charObj.name}-${charObj._id}`).remove();
+
+        // Remove the ID from teamIds array so the character can be re-added in subsequent searches
+        const idIndex = teamIds.indexOf(charObj._id);
+        const removedID = teamIds.splice(idIndex, 1); // This works, but is this good syntax?
+        
+        // If the team member is still showing as a search result, re-enable the "Add" button
+        // If the team member is NOT still showing as a search result, that's handled by the renderMatchedCharacters function
+        if (document.getElementById(`add-button-${charObj.name}-${charObj._id}`)) {
+            document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
+            document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
+        }
+    })
 
     imageContainer.addEventListener("mouseover", () => {
         charImage.className = "char-team-image-hover";
@@ -184,7 +185,7 @@ function addToTeam(charObj) {
         }
     });
 
-// ISSUE:
+// ISSUES:
     // When a character's details are shown, need to disable all other "show details" buttons
 }
 
