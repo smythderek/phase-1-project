@@ -1,11 +1,17 @@
 # Build Your Disney Dream Team
+Search across all Disney characters to select your favorite five!
 
 ## Description
+Enter the name of any Disney character in the search field -- matches are strict based on the search input. Scroll through the matches and once you find a character you want on your Dream Team, simply click Add under that character's picture. Perform as many searches as you want and you can add up to five different characters (note: if there are multiple matches for a search, e.g., Cinderella returns three matches, you there's no limit to adding as many of the search results as you want).
 
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Once characters are added to your team, hover over their picture in the Your Dream Team section to reveal more details about all programming the character has appeared in:
+- Movies
+- Short films
+- TV shows
+- Video games
+- Park attractions
 
-Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Each character can be removed by simply clicking the Remove button under their picture. There is no limit to the number of times you can remove/add characters (though you cannot add more characters once your team is full, with five characters).
 
 ## Resources
 https://disneyapi.dev/
@@ -13,20 +19,12 @@ https://disneyapi.dev/
 ## Roadmap
 Ideas for future improvements:
 - Updated styling to improve page aesthetics
-- 
-
-Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-License
-For open source projects, say how it is licensed.
-
-Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- When the team is full (five characters), disable all "Add" buttons in the search results
+- Rather than showing each team member's details on hover, provide a Show/Hide details button so the details can persist regardless of mouse location
+- Add bulk-remove action to clear/reset your team
+- Add some effects/animations to celebrate when the team is full (five characters)
+- Implement auto-complete for search
+- Implement fuzzy search so typos can be forgiven via close suggested searches
+- Add input field for user's name, so the page title can read "[Your name]'s Disney Dream Team"
+- Support export/print, so the user can share their dream team with others
+- Create an export option that is stylized in black and white with larger team pictures, to allow users to then use the page for coloring/decorating
