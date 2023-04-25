@@ -1,6 +1,5 @@
 let teamIds = [];
 let teamCount = 0
-// let showCount = 0; Not being used currently
 let searchCount = 0;
 const searchedTerm = document.getElementById("search-field").value;
 
@@ -111,12 +110,6 @@ function addToTeam(charObj) {
     removeBtn.textContent = "Remove";
     charCard.appendChild(removeBtn); 
     
-    const detailsButton = document.createElement("button");
-    detailsButton.id = `details-button`;
-    detailsButton.className = "button";
-    detailsButton.textContent = "Show details";
-    charCard.appendChild(detailsButton);
-    
     const charDetails = document.createElement("div");
     charDetails.id = `details-${charObj.name}-${charObj._id}`;
     document.getElementById("more-details").appendChild(charDetails);
@@ -163,30 +156,16 @@ function addToTeam(charObj) {
     imageContainer.addEventListener("mouseover", () => {
         charImage.className = "char-team-image-hover";
         charName.hidden = false;
-    })
+        charDetails.hidden = false;
+        charCard.className = "char-container-with-details";
+    });
 
     imageContainer.addEventListener("mouseout", () => {
         charImage.className = "char-team-image-base";
         charName.hidden = true;
-    })
-
-    detailsButton.addEventListener("click", () => {
-        if (detailsButton.textContent === "Show details") {
-            charDetails.hidden = false;
-            detailsButton.textContent = "Hide details";
-            charCard.className = "char-container-with-details";
-            // showCount = 1;
-        }
-        else {
-            charDetails.hidden = true;
-            detailsButton.textContent = "Show details";
-            charCard.className = "char-team-card";
-            // showCount = 0;
-        }
+        charDetails.hidden = true;
+        charCard.className = "char-team-card";
     });
-
-// ISSUES:
-    // When a character's details are shown, need to disable all other "show details" buttons
 }
 
 function renderCharDetails(array, element, title) {
