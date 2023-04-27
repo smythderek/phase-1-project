@@ -1,11 +1,11 @@
+body {
+    background-color: #71cff4;
+}
+
 @font-face {
     font-family: "Disney";
     src: url(NewWaltDisneyFontRegular-BPen.ttf);
     src: url(NewWaltDisneyUi-8YdA.ttf);
-}
-
-body {
-    background-color: #71cff4;
 }
 
 .disney-font {

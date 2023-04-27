@@ -143,7 +143,7 @@ function addToTeam(charObj) {
 
         // Remove the ID from teamIds array so the character can be re-added in subsequent searches
         const idIndex = teamIds.indexOf(charObj._id);
-        const removedID = teamIds.splice(idIndex, 1); // This works, but is this good syntax?
+        const removedID = teamIds.splice(idIndex, 1);
         
         // If the team member is still showing as a search result, re-enable the "Add" button
         // If the team member is NOT still showing as a search result, that's handled by the renderMatchedCharacters function
