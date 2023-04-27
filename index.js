@@ -1,5 +1,5 @@
 let teamIds = [];
-let teamCount = 0
+let teamCount = 0;
 let searchCount = 0;
 const searchedTerm = document.getElementById("search-field").value;
 
@@ -18,8 +18,6 @@ document.getElementById("search-submit").addEventListener('click', e => {
 function getCharacterMatches() {
     document.getElementById("search-results").innerHTML = '';
     fetch('https://api.disneyapi.dev/character?pageSize=7450')
-        // The /character endpoint defaults to providing one page of 50 results, so I'm using a pageSize that fits all 7,438 characters, in order to access all results
-        // BUT...it seems like this is causing some latency on the page
     .then(res => res.json())
     .then(allCharacters => allCharacters.data.forEach(character => { 
         if (character.name.toLowerCase() === document.getElementById("search-field").value.toLowerCase()) {
