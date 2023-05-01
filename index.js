@@ -1,7 +1,6 @@
 let teamIds = [];
 let teamCount = 0;
 let searchCount = 0;
-const searchedTerm = document.getElementById("search-field").value;
 
 document.getElementById("search-field").addEventListener('keypress', e => {
     if (e.key === "Enter") {
@@ -126,7 +125,7 @@ function addToTeam(charObj) {
     charDetails.appendChild(charTvShows);
 
     const charVideoGames = document.createElement("p");
-    renderCharDetails(charObj.tvShows, charVideoGames, "Video Games");
+    renderCharDetails(charObj.videoGames, charVideoGames, "Video Games");
     charDetails.appendChild(charVideoGames);
 
     const charParkAttractions = document.createElement("p")
