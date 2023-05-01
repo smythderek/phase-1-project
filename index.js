@@ -51,11 +51,8 @@ function renderMatchedCharacters(obj) {
 
     const addBtn = document.createElement("button");
     addBtn.id = `add-button-${obj.name}-${obj._id}`;
+    addBtn.textContent = "Add";
     charSearchCard.appendChild(addBtn);
-    // Handles characters who were previously in the team then removed, so they can be added in subsequent searches
-    if (!teamIds.includes(obj._id)) {
-        addBtn.textContent = "Add";
-    }; 
     
     document.getElementById("search-results").appendChild(charSearchCard);
 
@@ -143,7 +140,6 @@ function addToTeam(charObj) {
         const removedID = teamIds.splice(idIndex, 1);
         
         // If the team member is still showing as a search result, re-enable the "Add" button
-        // If the team member is NOT still showing as a search result, that's handled by the renderMatchedCharacters function
         if (document.getElementById(`add-button-${charObj.name}-${charObj._id}`)) {
             document.getElementById(`add-button-${charObj.name}-${charObj._id}`).textContent = 'Add';
             document.getElementById(`add-button-${charObj.name}-${charObj._id}`).disabled = false;
